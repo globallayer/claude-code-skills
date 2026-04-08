@@ -1,0 +1,63 @@
+{
+  "eas_profiles": {
+    "development": {
+      "distribution": "internal",
+      "ios": { "simulator": true },
+      "developmentClient": true
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "staging"
+    },
+    "production": {
+      "distribution": "store",
+      "channel": "production",
+      "autoIncrement": true
+    }
+  },
+  "runtime_version_policies": [
+    "sdkVersion",
+    "appVersion",
+    "nativeVersion",
+    "fingerprint"
+  ],
+  "update_channels": {
+    "production": "Live users",
+    "staging": "Internal testing",
+    "preview": "Beta testers"
+  },
+  "ios_requirements": {
+    "app_icon": "1024x1024 (no transparency)",
+    "screenshots": ["iPhone 6.7\"", "iPhone 6.5\"", "iPhone 5.5\"", "iPad Pro 12.9\""],
+    "privacy_policy_url": "Required",
+    "description_max_chars": 4000
+  },
+  "android_requirements": {
+    "app_icon": "512x512",
+    "feature_graphic": "1024x500",
+    "screenshots": ["Phone", "7\" tablet", "10\" tablet"],
+    "short_description_max_chars": 80,
+    "full_description_max_chars": 4000
+  },
+  "ota_limitations": {
+    "can_update": [
+      "JavaScript code",
+      "Images and assets",
+      "Fonts",
+      "app.json non-native fields"
+    ],
+    "cannot_update": [
+      "Native modules",
+      "iOS/Android permissions",
+      "bundleIdentifier/package",
+      "Expo SDK version",
+      "Native code"
+    ]
+  },
+  "review_times": {
+    "ios_first_submission": "1-7 days",
+    "ios_update": "1-2 days",
+    "android_first_submission": "7+ days",
+    "android_update": "1-3 days"
+  }
+}

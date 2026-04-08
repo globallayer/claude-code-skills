@@ -1,0 +1,20 @@
+{
+  "slack_channel": null,
+  "include_repos": [
+    "marketplace",
+    "axm-web",
+    "ChartCrack",
+    "astrobiography-review",
+    "EverGreen",
+    "RevisionApp"
+  ],
+  "exclude_patterns": [
+    "node_modules",
+    ".git",
+    "dist",
+    "build"
+  ],
+  "lookback_hours": 24,
+  "format": "markdown",
+  "auto_post_to_slack": false
+}

@@ -1,0 +1,45 @@
+{
+  "defaults": {
+    "dynamic": "auto",
+    "revalidate": false,
+    "runtime": "nodejs"
+  },
+  "fetch_options": {
+    "static": { "cache": "force-cache" },
+    "isr": { "next": { "revalidate": 60 } },
+    "dynamic": { "cache": "no-store" }
+  },
+  "component_types": {
+    "server": {
+      "can_use": ["async/await", "fs", "db", "fetch"],
+      "cannot_use": ["useState", "useEffect", "onClick", "browser APIs"]
+    },
+    "client": {
+      "can_use": ["useState", "useEffect", "onClick", "browser APIs"],
+      "cannot_use": ["fs", "db directly"]
+    }
+  },
+  "route_config_options": {
+    "dynamic": ["auto", "force-dynamic", "error", "force-static"],
+    "runtime": ["nodejs", "edge"],
+    "fetchCache": ["auto", "default-cache", "only-cache", "force-cache", "force-no-store", "default-no-store", "only-no-store"]
+  },
+  "file_conventions": [
+    "page.tsx",
+    "layout.tsx",
+    "loading.tsx",
+    "error.tsx",
+    "not-found.tsx",
+    "template.tsx",
+    "default.tsx",
+    "route.ts"
+  ],
+  "recommended_structure": {
+    "app": "Routes and layouts",
+    "components": "Reusable UI components",
+    "lib": "Utilities and helpers",
+    "hooks": "Custom React hooks",
+    "actions": "Server actions",
+    "types": "TypeScript types"
+  }
+}

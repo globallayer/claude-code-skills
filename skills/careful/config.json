@@ -1,0 +1,59 @@
+{
+  "blocked_patterns": {
+    "filesystem": [
+      "rm -rf",
+      "rm -r /",
+      "rm -rf *",
+      "rm -rf .",
+      "rmdir /s /q",
+      "> /dev/null",
+      "truncate"
+    ],
+    "git": [
+      "git push --force",
+      "git push -f",
+      "git reset --hard",
+      "git clean -fd",
+      "git checkout .",
+      "git branch -D",
+      "git rebase.*--force"
+    ],
+    "database": [
+      "DROP TABLE",
+      "DROP DATABASE",
+      "DROP SCHEMA",
+      "TRUNCATE",
+      "DELETE FROM.*(?!WHERE)",
+      "UPDATE.*SET.*(?!WHERE)"
+    ],
+    "kubernetes": [
+      "kubectl delete",
+      "kubectl delete ns",
+      "kubectl delete --all",
+      "helm uninstall.*--no-hooks"
+    ],
+    "docker": [
+      "docker system prune -a",
+      "docker rm -f \\$\\(docker ps",
+      "docker rmi -f \\$\\(docker images"
+    ],
+    "cloud": [
+      "terraform destroy",
+      "aws s3 rm --recursive",
+      "gcloud.*delete",
+      "heroku apps:destroy"
+    ]
+  },
+  "allowed_exceptions": [
+    "rm -rf node_modules",
+    "rm -rf dist",
+    "rm -rf build",
+    "rm -rf .next",
+    "rm -rf __pycache__",
+    "rm -rf .pytest_cache",
+    "rm -rf coverage"
+  ],
+  "confirmation_required": true,
+  "log_blocked_commands": true,
+  "suggest_alternatives": true
+}

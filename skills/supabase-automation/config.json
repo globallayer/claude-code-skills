@@ -1,0 +1,37 @@
+{
+  "connection": {
+    "pooler_port": 6543,
+    "direct_port": 5432,
+    "timeout_seconds": 60
+  },
+  "api_defaults": {
+    "default_schema": "public",
+    "include_system_schemas": false,
+    "max_tables_per_request": 20
+  },
+  "rls_templates": {
+    "authenticated_read": "auth.role() = 'authenticated'",
+    "owner_access": "auth.uid() = user_id",
+    "public_read": "true"
+  },
+  "realtime_defaults": {
+    "broadcast": true,
+    "presence": false,
+    "postgres_changes": true
+  },
+  "storage_defaults": {
+    "max_file_size_mb": 50,
+    "allowed_mime_types": ["image/*", "application/pdf"]
+  },
+  "edge_function_limits": {
+    "free_tier_cpu_ms": 150,
+    "pro_tier_cpu_ms": 400,
+    "max_payload_mb": 6
+  },
+  "common_extensions": [
+    "uuid-ossp",
+    "pgcrypto",
+    "pg_trgm",
+    "postgis"
+  ]
+}

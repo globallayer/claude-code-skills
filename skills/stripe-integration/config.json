@@ -1,0 +1,39 @@
+{
+  "default_currency": "usd",
+  "webhook_tolerance_seconds": 300,
+  "idempotency_key_prefix": "order",
+  "test_mode": true,
+  "test_cards": {
+    "success": "4242424242424242",
+    "declined": "4000000000000002",
+    "3d_secure": "4000002500003155",
+    "insufficient_funds": "4000000000009995",
+    "expired": "4000000000000069"
+  },
+  "checkout_defaults": {
+    "payment_method_types": ["card"],
+    "mode": "payment",
+    "allow_promotion_codes": false
+  },
+  "subscription_defaults": {
+    "payment_behavior": "default_incomplete",
+    "proration_behavior": "create_prorations",
+    "collection_method": "charge_automatically"
+  },
+  "webhook_events_to_handle": [
+    "payment_intent.succeeded",
+    "payment_intent.payment_failed",
+    "customer.subscription.created",
+    "customer.subscription.updated",
+    "customer.subscription.deleted",
+    "invoice.payment_succeeded",
+    "invoice.payment_failed",
+    "charge.refunded",
+    "checkout.session.completed"
+  ],
+  "retry_config": {
+    "max_retries": 3,
+    "backoff_base_ms": 1000,
+    "backoff_multiplier": 2
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "max_retries": 3,
+  "poll_interval_seconds": 60,
+  "timeout_minutes": 30,
+  "flaky_test_patterns": [
+    "timeout",
+    "ETIMEDOUT",
+    "ECONNRESET",
+    "ECONNREFUSED",
+    "socket hang up",
+    "net::ERR_CONNECTION",
+    "read ECONNRESET",
+    "Client network socket disconnected",
+    "getaddrinfo ENOTFOUND",
+    "connect EHOSTUNREACH",
+    "Exceeded timeout",
+    "TimeoutError",
+    "Navigation timeout",
+    "waiting for selector",
+    "Timed out retrying"
+  ],
+  "infrastructure_error_patterns": [
+    "Runner lost",
+    "Job was cancelled",
+    "The runner has received a shutdown signal",
+    "Resource not accessible by integration",
+    "API rate limit exceeded",
+    "No space left on device",
+    "out of memory"
+  ],
+  "auto_resolve_files": [
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "Gemfile.lock",
+    "poetry.lock",
+    "Cargo.lock",
+    "go.sum"
+  ],
+  "merge_method": "squash",
+  "delete_branch_after_merge": true,
+  "require_all_checks_pass": true,
+  "notify_on_completion": true
+}
