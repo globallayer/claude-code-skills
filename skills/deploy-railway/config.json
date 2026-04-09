@@ -1,0 +1,19 @@
+{
+  "project": "merka2a",
+  "service": "backend",
+  "production_url": "https://pretty-nurturing-production.up.railway.app",
+  "health_endpoint": "/health",
+  "deploy_branch": "main",
+  "auto_deploy": true,
+  "pre_deploy_checks": [
+    "tests",
+    "lint",
+    "type-check"
+  ],
+  "post_deploy_checks": [
+    "health",
+    "smoke-test"
+  ],
+  "rollback_on_failure": true,
+  "notification_channels": []
+}
