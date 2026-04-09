@@ -1,166 +1,184 @@
 # Claude Code Integrations Plan
 
-## 1. Skillify (claude-skillify)
+## Conflict Analysis
 
-**What it does:** Captures repeatable session workflows into reusable SKILL.md files.
+### Current System Inventory
 
-**Source:** https://github.com/0xMH/claude-skillify
+| Component | Count | Location |
+|-----------|-------|----------|
+| Skills | 1,424 | `~/.claude/skills/` (Antigravity-installed) |
+| Agents | 32 | `~/.claude/agents/` |
+| Commands | 65 | `~/.claude/commands/` |
+| Rules | 78 | `~/.claude/rules/` |
+| Plugins | 24 | Via settings.json |
 
-**Installation:**
-```bash
-/plugin marketplace add 0xMH/claude-skillify
-```
+### Potential Conflicts
 
-**Usage:**
-```bash
-/skillify                              # Analyze current session
-/skillify cherry-pick workflow         # With description hint
-```
+#### 1. claude-skillify vs /skill-create
 
-**When to use:**
-- After completing a repeatable process (deploy, PR review, migration)
-- When you find yourself doing the same multi-step workflow twice
-- To document complex procedures for future reuse
+| Tool | Source | Analyzes | Output |
+|------|--------|----------|--------|
+| `/skill-create` | Existing command | Git history | SKILL.md from code patterns |
+| `/skillify` | Plugin to install | Conversation history | SKILL.md from workflows |
 
-**Integration points:**
-- Run `/skillify` at end of sessions with repeatable work
-- Generated skills go to `~/.claude/skills/`
-- Skills sync to `globallayer/claude-code-skills` repo
+**Verdict: NO CONFLICT** - Complementary tools
+- Use `/skill-create` for code pattern extraction from repos
+- Use `/skillify` for workflow capture from sessions
 
 ---
 
-## 2. Skillpm (Package Manager)
+#### 2. skillpm vs Antigravity
 
-**What it does:** npm-based package manager for agent skills with dependency resolution.
+| Tool | Method | Skills Location |
+|------|--------|-----------------|
+| Antigravity | Marketplace bulk install | `~/.claude/skills/` |
+| skillpm | npm-based with dependencies | `~/.claude/skills/` (same) |
 
-**Source:** https://github.com/sbroenne/skillpm | https://skillpm.dev
+**Verdict: POTENTIAL CONFLICT**
+- Both write to same directory
+- skillpm may overwrite Antigravity skills with same name
 
-**Installation:**
+**Mitigation:**
+- Check for existing skill before `skillpm install`
+- Use skillpm only for skills NOT in Antigravity collection
+- Prefer Antigravity for bulk, skillpm for dependency-aware installs
+
+---
+
+#### 3. KAIROS vs Existing Orchestration
+
+| System | Agents | Method |
+|--------|--------|--------|
+| Existing | 32 general-purpose | `/team-create`, `/orchestrate`, Task tool |
+| KAIROS | 7 SDLC-specific | Filesystem mailbox, daemon mode |
+
+**Verdict: SIGNIFICANT OVERLAP**
+
+Existing commands that overlap with KAIROS:
+- `/team-create` - Creates coordinated agent teams
+- `/orchestrate` - Sequential workflows (feature, bugfix, refactor, security)
+- `/loop-start`, `/loop-status` - Daemon-like continuous operation
+- `~/.claude/teams/` - Already has team infrastructure
+
+**Recommendation: DO NOT INSTALL KAIROS agents**
+- Existing system already has superior orchestration
+- KAIROS would duplicate functionality
+- Instead: Document KAIROS patterns as reference only
+
+---
+
+## Installation Decisions
+
+### ✅ SAFE TO INSTALL
+
+#### 1. claude-skillify (Plugin)
+```bash
+/plugin marketplace add 0xMH/claude-skillify
+```
+**Reason:** Complements `/skill-create` - different analysis source
+
+**Usage differentiation:**
+- `/skill-create` → Extract patterns from git commits
+- `/skillify` → Capture workflows from conversations
+
+---
+
+### ⚠️ INSTALL WITH CAUTION
+
+#### 2. skillpm (npm package)
 ```bash
 npm install -g skillpm
 ```
 
-**Commands:**
+**Pre-install check:**
 ```bash
-npx skillpm install <skill>    # Install skill + dependencies
-npx skillpm list               # Show installed skills
-npx skillpm init               # Scaffold new skill package
-npx skillpm publish            # Publish to npm
+# Before installing any skill, verify it doesn't exist
+ls ~/.claude/skills/ | grep -i "<skill-name>"
 ```
 
-**When to use:**
-- Installing community skills with dependencies
-- Publishing skills to npm ecosystem
-- Managing MCP server configurations automatically
-
-**Integration points:**
-- 90+ skills available with `agent-skill` keyword on npm
-- Auto-configures MCP servers from skill dependencies
-- Works with Claude, Cursor, VS Code, Codex
-
----
-
-## 3. KAIROS Framework
-
-**What it does:** Multi-agent SDLC orchestration with 7 specialized subagents.
-
-**Source:** https://github.com/diego81b/kairos-agents-framework | https://kairos-kit.com
-
-**Concept:** Greek for "the right moment" - daemon mode where Claude works autonomously.
-
-**Architecture:**
-- 7 specialized subagents in `agents/` directory
-- Filesystem-based mailbox: `~/.claude/teams/{team}/mailbox/{agent}.json`
-- Forked sub-agent model for isolated background tasks
-
-**Installation:**
+**Safe usage:**
 ```bash
-# Copy agents to project
-cp -r kairos-agents-framework/agents/ ./agents/
+# Only install skills not in Antigravity collection
+npx skillpm install <skill-name>
 ```
 
-**Usage:**
-```
-"Help me add X feature with KAIROS"
-```
-
-**When to use:**
-- Complex multi-step features requiring coordination
-- Background autonomous development tasks
-- Quality-focused development with built-in review cycles
-
-**Integration points:**
-- Orchestrates 7 agents automatically per task
-- Integrates with existing agent definitions in `~/.claude/agents/`
-- Can run as daemon for continuous development
+**Avoid:**
+- Installing skills that already exist via Antigravity
+- Using `skillpm` for bulk installs (use Antigravity instead)
 
 ---
 
-## Workflow Automation Rules
+### ❌ DO NOT INSTALL
 
-### Auto-Skillify Trigger
-After completing these workflows, prompt to run `/skillify`:
-- Deployment to any platform
-- PR creation and review cycles
-- Database migrations
-- API integrations
-- Build/CI fixes
+#### 3. KAIROS Agents
+**Reason:** Conflicts with existing superior orchestration system
 
-### Skillpm Integration
-When user requests a skill that isn't installed:
-1. Search npm: `npm search <skill-name> --keywords agent-skill`
-2. If found: `npx skillpm install <skill-name>`
-3. Skill auto-wires to `~/.claude/skills/`
-
-### KAIROS Activation
-Trigger KAIROS orchestration when:
-- Feature request spans multiple files/domains
-- Task requires research + implementation + testing + review
-- User says "with KAIROS" or requests autonomous work
-- Complex refactoring or architectural changes
+**Instead, reference KAIROS patterns:**
+- 7-agent SDLC workflow concept → Use existing `/orchestrate feature`
+- Filesystem mailbox → Already have `~/.claude/teams/`
+- Daemon mode → Use existing `/loop-start`
 
 ---
 
-## Directory Structure
+## Integration Strategy
 
-```
-~/.claude/
-├── skills/           # 1,424 skills (synced to GitHub)
-├── agents/           # 32 agent definitions (synced to GitHub)
-├── rules/            # 78 rule files (synced to GitHub)
-├── teams/            # KAIROS team mailboxes
-│   └── {team}/
-│       └── mailbox/
-│           └── {agent}.json
-└── INTEGRATIONS.md   # This file
+### Workflow Capture (NEW)
+
+After completing repeatable work:
+1. **For code patterns:** Run `/skill-create`
+2. **For session workflows:** Run `/skillify` (after plugin install)
+3. **Sync to GitHub:** Push to `globallayer/claude-code-skills`
+
+### Skill Installation Priority
+
+1. **First:** Check existing `~/.claude/skills/` (1,424 Antigravity skills)
+2. **Second:** Search npm `agent-skill` keyword
+3. **Third:** Use `skillpm install` only if not in Antigravity
+
+### Multi-Agent Orchestration
+
+Use existing system:
+```bash
+/orchestrate feature "Add user authentication"
+/team-create --name auth --goal "Build OAuth" --workers "planner:opus,security-reviewer,code-reviewer"
+/loop-start                    # For autonomous operation
 ```
 
 ---
 
-## Sync Commands
+## Safe Installation Commands
 
 ```bash
-# Sync local to GitHub
-cd ~/Claude/claude-code-skills
-cp -r ~/.claude/skills/* skills/
-cp -r ~/.claude/agents/* agents/
-cp -r ~/.claude/rules/* rules/
-git add -A && git commit -m "sync" && git push
+# 1. Install claude-skillify plugin (SAFE)
+/plugin marketplace add 0xMH/claude-skillify
 
-# Pull from GitHub to local
-git pull origin master
-cp -r skills/* ~/.claude/skills/
-cp -r agents/* ~/.claude/agents/
-cp -r rules/* ~/.claude/rules/
+# 2. Install skillpm globally (CAUTION - check before each use)
+npm install -g skillpm
+
+# 3. KAIROS - DO NOT INSTALL, use existing orchestration instead
+```
+
+---
+
+## Post-Install Verification
+
+```bash
+# Verify no skill overwrites
+ls ~/.claude/skills/ | wc -l   # Should still be ~1424
+
+# Verify plugins
+cat ~/.claude/settings.json | grep skillify
+
+# Test commands
+/skillify --help
+/skill-create --help
+/orchestrate --help
 ```
 
 ---
 
 ## Sources
 
-- [claude-skillify](https://github.com/0xMH/claude-skillify) - Workflow capture
-- [skillpm](https://github.com/sbroenne/skillpm) - Package manager
-- [KAIROS Framework](https://github.com/diego81b/kairos-agents-framework) - Multi-agent orchestration
-- [Kairos Kit](https://kairos-kit.com) - Orchestration conventions
-- [Agent Skills Registry](https://skillpm.dev/registry/) - 90+ npm skills
-- [MCP Servers](https://mcpservers.org) - MCP server directory
+- [claude-skillify](https://github.com/0xMH/claude-skillify) - Workflow capture (INSTALL)
+- [skillpm](https://github.com/sbroenne/skillpm) - Package manager (INSTALL WITH CAUTION)
+- [KAIROS Framework](https://github.com/diego81b/kairos-agents-framework) - Reference only (DO NOT INSTALL)
