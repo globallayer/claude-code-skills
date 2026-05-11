@@ -15,6 +15,11 @@ Secure-by-default environment variable management for Claude Code sessions.
 > **Repository**: https://github.com/dmno-dev/varlock
 > **Documentation**: https://varlock.dev
 
+## When to Use
+- You need to work with environment variables or secrets in a Claude Code session without exposing their values.
+- The task involves validating, loading, or auditing secrets while keeping them out of logs, diffs, and assistant context.
+- You want a secure-by-default workflow built around Varlock instead of direct `.env` inspection.
+
 ## Core Principle: Secrets Never Exposed
 
 When working with Claude, secrets must NEVER appear in:
@@ -436,3 +441,8 @@ Add these to your package.json:
 
 *Last updated: December 22, 2025*
 *Secure-by-default environment management for Claude Code*
+
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
