@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "agent": "code-reviewer",
+  "patterns": [
+    {
+      "id": "immutable-updates",
+      "name": "Immutable State Updates",
+      "description": "Always create new objects instead of mutating existing ones",
+      "example": "const updated = { ...original, field: newValue }",
+      "frequency": "always",
+      "projects": ["merka2a", "astrobiography"]
+    },
+    {
+      "id": "small-functions",
+      "name": "Function Size Limit",
+      "description": "Functions should be under 50 lines. Extract if larger.",
+      "threshold": 50,
+      "frequency": "always"
+    },
+    {
+      "id": "file-size-limit",
+      "name": "File Size Limit",
+      "description": "Files should be under 800 lines. Split if larger.",
+      "threshold": 800,
+      "frequency": "always"
+    },
+    {
+      "id": "no-console-log",
+      "name": "No Console Logs",
+      "description": "Remove console.log before commit. Use proper logging.",
+      "frequency": "always"
+    },
+    {
+      "id": "explicit-error-handling",
+      "name": "Explicit Error Handling",
+      "description": "All async operations must have try-catch or .catch()",
+      "frequency": "always"
+    }
+  ],
+  "issues": [],
+  "lastUpdated": "2026-05-22"
+}

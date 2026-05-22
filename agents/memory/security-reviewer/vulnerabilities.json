@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "agent": "security-reviewer",
+  "vulnerabilities": [],
+  "patterns": [
+    {
+      "id": "no-hardcoded-secrets",
+      "name": "No Hardcoded Secrets",
+      "description": "API keys, passwords, tokens must use environment variables",
+      "severity": "CRITICAL",
+      "regex": "(sk-|ghp_|AKIA|password\\s*=\\s*['\"])",
+      "frequency": "always"
+    },
+    {
+      "id": "sql-injection",
+      "name": "SQL Injection Prevention",
+      "description": "Use parameterized queries, never string concatenation",
+      "severity": "CRITICAL",
+      "frequency": "always"
+    },
+    {
+      "id": "xss-prevention",
+      "name": "XSS Prevention",
+      "description": "Sanitize all user input before rendering",
+      "severity": "HIGH",
+      "frequency": "always"
+    },
+    {
+      "id": "csrf-protection",
+      "name": "CSRF Protection",
+      "description": "All state-changing endpoints must have CSRF tokens",
+      "severity": "HIGH",
+      "frequency": "always"
+    }
+  ],
+  "remediations": [],
+  "lastUpdated": "2026-05-22"
+}

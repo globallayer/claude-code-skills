@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "agent": "planner",
+  "activeProjects": {
+    "merka2a": {
+      "phase": "Phase 2",
+      "focus": "Partner outreach and public face",
+      "blockers": [],
+      "nextMilestone": "First design partner onboarded"
+    },
+    "astrobiography": {
+      "phase": "Phase 8",
+      "focus": "App Store submission",
+      "blockers": ["Screenshots needed"],
+      "nextMilestone": "Google Play submission"
+    }
+  },
+  "planTemplates": {
+    "feature": [
+      "1. Create spec in specs/[feature].md",
+      "2. User reviews and approves spec",
+      "3. Generate tests from spec (RED)",
+      "4. Implement until tests pass (GREEN)",
+      "5. Refactor (REFACTOR)",
+      "6. Code review + security review",
+      "7. User verifies against spec"
+    ],
+    "bugfix": [
+      "1. Reproduce bug",
+      "2. Write regression test (RED)",
+      "3. Fix bug (GREEN)",
+      "4. Verify fix",
+      "5. Code review"
+    ],
+    "refactor": [
+      "1. Identify scope and goals",
+      "2. Ensure test coverage exists",
+      "3. Refactor incrementally",
+      "4. Verify tests still pass",
+      "5. Code review"
+    ]
+  },
+  "lastUpdated": "2026-05-22"
+}
